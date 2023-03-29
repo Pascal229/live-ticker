@@ -35,14 +35,13 @@ export interface Team {
   name: string;
   key: string;
   score: number;
-  events: (GameGoalEvent | GamePenaltyOrPenaltyKickEvent)[];
 }
 
 export interface Game {
   id: number;
   status: GameStatus;
   teams: [Team, Team];
-  events: GameStateUpdateEvent[];
+  events: GameUpdateEvent[];
 }
 
 export enum GameStatus {
@@ -74,9 +73,9 @@ interface BaseGameUpdateEvent {
 }
 
 interface SimplePlayer {
-    id: number;
-    name: string;
-    number: number;
+  id: number;
+  name: string;
+  number: number;
 }
 
 export interface GameGoalEvent extends BaseGameUpdateEvent {
@@ -126,17 +125,16 @@ export const appRouter = createTRPCRouter({
 
       ctx.res.header(
         "set-cookie",
-        cookie
-          .serialize(
-            "ELGG_TOKEN",
-            jwt.sign({ id: newUser.id, name: newUser.name }, ELGG_SECRET),
-            {
-              secure: true,
-              path: "/",
-              httpOnly: true,
-              expires: cookieExpiration,
-            }
-          )
+        cookie.serialize(
+          "ELGG_TOKEN",
+          jwt.sign({ id: newUser.id, name: newUser.name }, ELGG_SECRET),
+          {
+            secure: true,
+            path: "/",
+            httpOnly: true,
+            expires: cookieExpiration,
+          }
+        )
       );
 
       return { ok: true, result: newUser };
@@ -180,7 +178,7 @@ export const appRouter = createTRPCRouter({
   }),
   currentGame: publicProcedure.query(async (): Promise<Game | null> => {
     return getCurrentGame();
-  })
+  }),
 });
 
 export type AppRouter = typeof appRouter;

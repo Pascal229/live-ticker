@@ -60,11 +60,7 @@ export const getGame = async (
     },
   });
   if (!targetGame) return null;
-  const team_events: [
-    (GamePenaltyOrPenaltyKickEvent | GameGoalEvent)[],
-    (GamePenaltyOrPenaltyKickEvent | GameGoalEvent)[]
-  ] = [[], []];
-  const global_events: GameStateUpdateEvent[] = [];
+  const global_events: GameUpdateEvent[] = [];
   let last_status = GameStatus.NOT_STARTED;
   let last_timestamp = targetGame.date;
   let game_time = 0;
@@ -124,12 +120,8 @@ export const getGame = async (
     } else if (event.type === "GOAL") {
       game_time += event.time.getTime() - last_timestamp.getTime();
       last_timestamp = event.time;
-      if (
-        typeof event.teamIndex !== "number" ||
-        event.teamIndex >= team_events.length
-      )
-        continue;
-      team_events[event.teamIndex].push({
+      if (typeof event.teamIndex !== "number" || event.teamIndex >= 2) continue;
+      global_events.push({
         id: event.id,
         type: GameUpdateType.GOAL,
         assist: event.assistingPlayer,
@@ -142,8 +134,8 @@ export const getGame = async (
     } else if (["PENALTY", "PENALTY_KICK"].includes(event.type)) {
       game_time += event.time.getTime() - last_timestamp.getTime();
       last_timestamp = event.time;
-      if (!event.teamIndex || event.teamIndex >= team_events.length) continue;
-      team_events[event.teamIndex].push({
+      if (!event.teamIndex || event.teamIndex >= 2) continue;
+      global_events.push({
         id: event.id,
         type:
           event.type === "PENALTY"
@@ -165,13 +157,11 @@ export const getGame = async (
       {
         name: targetGame.homeTeam,
         key: targetGame.homeTeamKey,
-        events: team_events[0],
         score: targetGame.homeScore,
       },
       {
         name: targetGame.guestTeam,
         key: targetGame.guestTeamKey,
-        events: team_events[1],
         score: targetGame.guestScore,
       },
     ],

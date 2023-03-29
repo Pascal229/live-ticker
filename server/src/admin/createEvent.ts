@@ -94,10 +94,9 @@ export default async (req: FastifyRequest, res: FastifyReply) => {
       warning: "Unexpected error: Didn't find game to push event to users!",
     });
   else {
-    const newEvent =
-      newGame.events.find((event) => event.id === insertedActionId) ||
-      newGame.teams[0].events.find((event) => event.id === insertedActionId) ||
-      newGame.teams[1].events.find((event) => event.id === insertedActionId);
+    const newEvent = newGame.events.find(
+      (event) => event.id === insertedActionId
+    );
     if (!newEvent)
       return res.send({
         ok: true,
