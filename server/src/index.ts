@@ -12,27 +12,28 @@ import { createContext } from "./context";
 const server = fastify();
 
 server.get("/ping", async (_, res) => {
-    res.send("pong");
-});
-
-server.register(fastifyTRPCPlugin, {
-    prefix: "/trpc",
-    useWss: true,
-    trpcOptions: { router: appRouter, createContext },
+  res.send("pong");
 });
 
 server.register(ws);
+server.register(fastifyTRPCPlugin, {
+  prefix: "/trpc",
+  useWSS: true,
+  useWss: true,
+  trpcOptions: { router: appRouter, createContext },
+});
+
 server.register(cors, {
-    origin: true,
+  origin: true,
 });
 
 adminRoutes(server);
 
 (async () => {
-    try {
-        await server.listen({ port: 3000 });
-    } catch (err) {
-        server.log.error(err);
-        process.exit(1);
-    }
+  try {
+    await server.listen({ port: 3000 });
+  } catch (err) {
+    server.log.error(err);
+    process.exit(1);
+  }
 })();
