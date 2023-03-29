@@ -95,9 +95,9 @@ export default async (req: FastifyRequest, res: FastifyReply) => {
     });
   else {
     const newEvent =
-      newGame.events.find((event) => event.id === eventData.gameId) ||
-      newGame.teams[0].events.find((event) => event.id === eventData.gameId) ||
-      newGame.teams[1].events.find((event) => event.id === eventData.gameId);
+      newGame.events.find((event) => event.id === insertedActionId) ||
+      newGame.teams[0].events.find((event) => event.id === insertedActionId) ||
+      newGame.teams[1].events.find((event) => event.id === insertedActionId);
     if (!newEvent)
       return res.send({
         ok: true,
