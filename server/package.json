@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@fastify/cors": "^8.2.1",
+    "@fastify/static": "^6.9.0",
     "@fastify/websocket": "^7.2.0",
     "@prisma/client": "^4.12.0",
     "@tanstack/react-query": "^4.28.0",

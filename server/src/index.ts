@@ -2,6 +2,8 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import cors from "@fastify/cors";
+import path from "path"
+import fstatic from "@fastify/static";
 import fastify from "fastify";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import ws from "@fastify/websocket";
@@ -14,6 +16,10 @@ const server = fastify();
 server.get("/ping", async (_, res) => {
   res.send("pong");
 });
+
+server.register(fstatic, {
+  root: path.join(__dirname, '../client/dist'),
+})
 
 server.register(ws);
 server.register(fastifyTRPCPlugin, {
