@@ -28,16 +28,13 @@ model User {
 }
 
 model Player {
-  id          Int      @id @default(autoincrement())
-  name        String
-  number      Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  games       Game[]
-  ScoreEvents Event[]
-  Event       Event[]
-  Event       Event[]
-  Event       Event[]
+  id        Int      @id @default(autoincrement())
+  name      String
+  number    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  games     Game[]
+  Event     Event[]
 }
 
 model Game {
@@ -61,19 +58,18 @@ model Game {
 }
 
 model Event {
-  id                Int           @id @default(autoincrement())
-  type              GameEventType
-  time              DateTime
-  teamIndex         Int
-  scorerPlayer      Player?       @relation(fields: [scorerPlayerId], references: [id], name: "scorer")
-  scorerPlayerId    Int
-  assistingPlayer   Player?       @relation(fields: [assistingPlayerId], references: [id], name: "Assister")
-  assistingPlayerId Int
-  newGameState      Status
-  game              Game          @relation(fields: [gameId], references: [id])
-  gameId            Int
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
+  id           Int           @id @default(autoincrement())
+  type         GameEventType
+  eventMessage String
+  time         DateTime
+  teamIndex    Int
+  newGameState Status
+  game         Game          @relation(fields: [gameId], references: [id])
+  gameId       Int
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  Player       Player?       @relation(fields: [playerId], references: [id])
+  playerId     Int?
 }
 
 model Comment {

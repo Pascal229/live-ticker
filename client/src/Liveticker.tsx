@@ -1,38 +1,36 @@
-import React from 'react'
-import { trpc } from './client'
-import Livestream from './components/Livestream'
-import Comments from './components/Comments'
-import Ticker from './components/Ticker'
+import React from "react";
+import { trpc } from "./client";
+import Livestream from "./components/Livestream";
+import Comments from "./components/Comments";
+import Ticker from "./components/Ticker";
 
-interface Event {
-
-}
+interface Event {}
 
 interface Team {
   name: string;
   score: number;
-  events: Event[]
+  events: Event[];
 }
 
 interface Game {
   id: number;
-  teams: [Team, Team]
+  teams: [Team, Team];
 }
 
 const Liveticker = () => {
-  const [game, setGame] = React.useState(null)
+  const [game, setGame] = React.useState(null);
 
   return (
-    <div className='flex flex-col h-screen lg:flex-row'>
-      <div className='flex flex-col flex-1'>
-        <Livestream/>
-        <Ticker/>
+    <div className="flex h-screen flex-col lg:flex-row">
+      <div className="flex flex-1 flex-col">
+        <Livestream />
+        <Ticker />
       </div>
-      <div className='w-full h-full lg:max-w-sm'>
-      <Comments/>
+      <div className="h-full w-full lg:max-w-xl">
+        <Comments />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Liveticker
+export default Liveticker;
