@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function Comments() {
-  return (
-    <div className='h-full bg-gray-800'>Comments</div>
-  )
+  return <div className="h-full bg-gray-800">Comments</div>;
 }
 
-export default Comments
+export default Comments;

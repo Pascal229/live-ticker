@@ -117,32 +117,21 @@ export const getGame = async (
         type: GameUpdateType.STATE_UDPATE,
         new_state: last_status,
       });
-    } else if (event.type === "GOAL") {
+    } else if (["PENALTY", "PENALTY_KICK", "GOAL"].includes(event.type)) {
       game_time += event.time.getTime() - last_timestamp.getTime();
       last_timestamp = event.time;
       if (typeof event.teamIndex !== "number" || event.teamIndex >= 2) continue;
       global_events.push({
         id: event.id,
-        type: GameUpdateType.GOAL,
-        assist: event.assistingPlayer,
-        game_id: targetGame.id,
-        display_time: Math.floor(game_time / 60 / 1000),
-        player: event.scorerPlayer,
-        team_index: event.teamIndex,
-        timestamp: event.time,
-      });
-    } else if (["PENALTY", "PENALTY_KICK"].includes(event.type)) {
-      game_time += event.time.getTime() - last_timestamp.getTime();
-      last_timestamp = event.time;
-      if (!event.teamIndex || event.teamIndex >= 2) continue;
-      global_events.push({
-        id: event.id,
         type:
-          event.type === "PENALTY"
+          event.type === "GOAL"
+            ? GameUpdateType.GOAL
+            : event.type === "PENALTY"
             ? GameUpdateType.PENALTY
             : GameUpdateType.PENALTY_KICK,
-        display_time: Math.floor(game_time / 60 / 1000),
+        assist: event?.assistingPlayer || null,
         game_id: targetGame.id,
+        display_time: Math.floor(game_time / 60 / 1000),
         player: event.scorerPlayer,
         team_index: event.teamIndex,
         timestamp: event.time,

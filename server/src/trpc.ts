@@ -3,10 +3,8 @@ import { observable } from "@trpc/server/observable";
 import { EventEmitter } from "stream";
 import { Context, ELGG_SECRET } from "./context";
 import superjson from "superjson";
-import { commentRouter } from "./routes/comment";
 import z from "zod";
 import db from "./db";
-import { tickerRouter } from "./routes/ticker";
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
 import { getCurrentGame } from "./game";
@@ -89,6 +87,7 @@ export interface GamePenaltyOrPenaltyKickEvent extends BaseGameUpdateEvent {
   type: GameUpdateType.PENALTY | GameUpdateType.PENALTY_KICK;
   team_index: number;
   player: SimplePlayer | null;
+  assist: SimplePlayer | null;
 }
 
 export interface GameStateUpdateEvent extends BaseGameUpdateEvent {
