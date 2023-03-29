@@ -10,7 +10,7 @@ const createEventObject = z
     time: z
       .string()
       .refine((value) => new Date(value))
-      .default(new Date().toISOString()),
+      .default(() => new Date().toISOString()),
     gameId: z.number(),
     isHomeTeam: z.boolean(),
     scorerPlayer: z.number().optional(),
@@ -23,7 +23,7 @@ const createEventObject = z
         time: z
           .string()
           .refine((value) => new Date(value))
-          .default(new Date().toISOString()),
+          .default(() => new Date().toISOString()),
         type: z.enum([
           "BREAK",
           "PAUSE",
