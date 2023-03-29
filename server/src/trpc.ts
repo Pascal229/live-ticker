@@ -109,7 +109,7 @@ export const appRouter = createTRPCRouter({
     .input(z.object({ name: z.string().min(3).max(50) }))
     .query(async ({ ctx, input }) => {
       if (ctx.user) return { ok: true, result: ctx.user };
-      const user = await db.user.create({
+      const newUser = await db.user.create({
         data: {
           name: input.name,
         },
@@ -128,8 +128,8 @@ export const appRouter = createTRPCRouter({
         "set-cookie",
         cookie
           .serialize(
-            "set-cookie",
-            jwt.sign({ id: user.id, name: user.name }, ELGG_SECRET),
+            "ELGG_TOKEN",
+            jwt.sign({ id: newUser.id, name: newUser.name }, ELGG_SECRET),
             {
               secure: true,
               path: "/",
@@ -137,10 +137,9 @@ export const appRouter = createTRPCRouter({
               expires: cookieExpiration,
             }
           )
-          .slice("set-cookie: ".length)
       );
 
-      return { ok: true, result: user };
+      return { ok: true, result: newUser };
     }),
   submitComment: publicProcedure
     .input(
