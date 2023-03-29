@@ -75,13 +75,19 @@ export const getGame = async (
       GameStatus.BREAK,
       GameStatus.FINISHED,
       GameStatus.PAUSED,
+      GameStatus.NOT_STARTED,
     ];
     const TIME_STARTERS = ["FIRST_PERIOD", "SECOND_PERIOD"];
-    const TIME_STARTERS_ENUM = [GameStatus.FINISHED, GameStatus.SECOND_PERIOD];
+    const TIME_STARTERS_ENUM = [
+      GameStatus.FINISHED,
+      GameStatus.FIRST_PERIOD,
+      GameStatus.SECOND_PERIOD,
+    ];
 
     if (TIME_STOPPERS.includes(event.type)) {
       if (TIME_STARTERS_ENUM.includes(last_status)) {
         game_time += event.time.getTime() - last_timestamp.getTime();
+
         last_timestamp = event.time;
       }
       last_status =
@@ -118,7 +124,11 @@ export const getGame = async (
     } else if (event.type === "GOAL") {
       game_time += event.time.getTime() - last_timestamp.getTime();
       last_timestamp = event.time;
-      if (typeof event.teamIndex !== "number" || event.teamIndex >= team_events.length) continue;
+      if (
+        typeof event.teamIndex !== "number" ||
+        event.teamIndex >= team_events.length
+      )
+        continue;
       team_events[event.teamIndex].push({
         id: event.id,
         type: GameUpdateType.GOAL,
@@ -171,6 +181,7 @@ export const getGame = async (
 export const getCurrentGame = (): Promise<Game | null> => {
   const now = new Date();
   const inTenMinutes = new Date(now.getTime() + 1000 * 60 * 10);
+
   return getGame({
     date: {
       lt: inTenMinutes,
