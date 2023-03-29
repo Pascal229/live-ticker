@@ -1,3 +1,7 @@
+import dotenv from "dotenv";
+dotenv.config();
+
+import cors from "@fastify/cors";
 import fastify from "fastify";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import ws from "@fastify/websocket";
@@ -7,14 +11,23 @@ import { createContext } from "./context";
 
 const server = fastify();
 
-server.get("/ping", async (request, reply) => {
-    return "pong\n";
+server.get("/ping", async (_, res) => {
+    res.send("pong");
 });
 
 server.register(fastifyTRPCPlugin, {
     prefix: "/trpc",
+    useWss: true,
     trpcOptions: { router: appRouter, createContext },
 });
+
+server.register(ws);
+server.register(cors, {
+    origin: true,
+});
+
+adminRoutes(server);
+
 (async () => {
     try {
         await server.listen({ port: 3000 });
@@ -23,14 +36,3 @@ server.register(fastifyTRPCPlugin, {
         process.exit(1);
     }
 })();
-
-server.register(ws);
-server.register(adminRoutes, { prefix: "admin" });
-
-server.listen({ port: 5000 }, (err, address) => {
-    if (err) {
-        console.error(err);
-        process.exit(1);
-    }
-    console.log(`Server listening at ${address}`);
-});
