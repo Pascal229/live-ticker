@@ -16,6 +16,8 @@ RUN cd server && yarn
 COPY client ./client
 COPY server ./server
 
+RUN cd server && yarn prisma generate
+
 # Build the client for production
 RUN cd client && yarn build
 
