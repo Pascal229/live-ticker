@@ -80,8 +80,8 @@ const TickerEvents = (props: { game: Game }) => {
 
   const events = props.game.events;
 
-  const sortedEvents = events.sort((a, b) =>
-    a.timestamp < b.timestamp ? -1 : 1
+  const sortedEvents = events.sort(
+    (a, b) => a.timestamp.getTime() - b.timestamp.getTime()
   );
 
   return (
@@ -119,7 +119,7 @@ const TickerEvent = (props: { event: GameUpdateEvent; game: Game }) => {
   // props.event.
   return (
     <div
-      className={`flex gap-2 ${
+      className={`flex items-center gap-2 ${
         props.event.team_index === 0 ? "justify-start" : "flex-row-reverse "
       }`}
     >

@@ -48,6 +48,19 @@ export default async (req: FastifyRequest, res: FastifyReply) => {
     eventData.type === "PENALTY" ||
     eventData.type === "PENALTY_KICK"
   ) {
+    if (eventData.type === "GOAL") {
+      const upd = await db.game.update({
+        where: {
+          id: eventData.gameId,
+        },
+        data: {
+          [eventData.isHomeTeam ? "homeScore" : "guestScore"]: {
+            increment: 1,
+          },
+        },
+      });
+      console.log(upd);
+    }
     const event = await db.event.create({
       data: {
         time: eventData.time,
