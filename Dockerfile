@@ -38,4 +38,4 @@ COPY --from=build /app/client/dist ./client/dist
 COPY server ./server
 
 # Start the server
-CMD cd ./server && yarn build && yarn prisma && yarn start
+CMD cd ./server && yarn build && yarn prisma && yarn prod
