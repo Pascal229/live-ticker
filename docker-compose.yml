@@ -11,6 +11,13 @@ services:
       - ./postgres:/var/lib/postgresql/data
     ports:
       - '5432:5432'
-  # app:
-  #   build: ./server
-  #   command: 
+  app:
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    environment:
+      - ELGG_SECRET=adfef
+      - DATABASE_URL=postgres://admin:admin@postgres:5432/liveticker
+    build: ./
+    ports:
+    - '8080:3000'
