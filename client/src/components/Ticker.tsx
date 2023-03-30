@@ -22,7 +22,7 @@ export enum GameStatus {
 
 function Ticker(props: { game: Game }) {
   return (
-    <div className="bg-gray-200 md:flex-1">
+    <div className="bg-gray-100 md:flex-1">
       <TickerHeader game={props.game} />
       <TickerEvents game={props.game} />
     </div>
@@ -85,14 +85,14 @@ const TickerEvents = (props: { game: Game }) => {
   );
 
   return (
-    <div className="flex flex-col gap-2 p-5">
+    <div className="flex flex-col gap-2 overflow-y-scroll p-5">
       <div className="mb-5 flex justify-between">
         <div className="text-md font-bold">{homeTeam.name}</div>
         <div className="text-md font-bold">{guestTeam.name}</div>
       </div>
       <div className="flex flex-col gap-5">
         {sortedEvents.map((event) => (
-          <div className="border-y">
+          <div key={event.id} className="">
             <TickerEvent event={event} game={props.game} />
           </div>
         ))}
@@ -104,7 +104,7 @@ const TickerEvents = (props: { game: Game }) => {
 const TickerEvent = (props: { event: GameUpdateEvent; game: Game }) => {
   if (props.event.type === GameUpdateType.STATE_UDPATE) {
     return (
-      <div className="flex justify-center border-b border-black text-gray-900">
+      <div className="flex justify-center border-b border-black text-gray-900 ">
         {props.event.new_state === GameStatus.FIRST_PERIOD ? "1. Halbzeit" : ""}
         {props.event.new_state === GameStatus.SECOND_PERIOD
           ? "2. Halbzeit"

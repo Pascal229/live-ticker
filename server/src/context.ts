@@ -11,22 +11,24 @@ if (!ELGG_SECRET) throw Error("No ELGG_SECRET provided.");
 const getUser = (
     req: FastifyRequest
 ): { id: number; name: string } | undefined => {
-    if (!req.headers.cookie) return;
-    const cookies = cookie.parse(req.headers.cookie);
-    if (typeof cookies.ELGG_TOKEN !== "string") return;
-    try {
-        const decoded = jwt.verify(cookies.ELGG_TOKEN, ELGG_SECRET);
-        console.log(decoded);
-        if (
-            typeof decoded === "object" &&
-            typeof decoded.id === "number" &&
-            typeof decoded.name === "string"
-        )
-            return decoded as { id: number; name: string };
-        else return;
-    } catch {
-        return;
-    }
+    return { id: 1, name: "test" };
+
+    // if (!req.headers.cookie) return;
+    // const cookies = cookie.parse(req.headers.cookie);
+    // if (typeof cookies.ELGG_TOKEN !== "string") return;
+    // try {
+    //     const decoded = jwt.verify(cookies.ELGG_TOKEN, ELGG_SECRET);
+    //     console.log(decoded);
+    //     if (
+    //         typeof decoded === "object" &&
+    //         typeof decoded.id === "number" &&
+    //         typeof decoded.name === "string"
+    //     )
+    //         return decoded as { id: number; name: string };
+    //     else return;
+    // } catch {
+    //     return;
+    // }
 };
 
 export function createContext({ req, res }: CreateFastifyContextOptions) {
