@@ -27,6 +27,8 @@ function Comments() {
     }
   );
 
+  const [disabledSubmit, setDisabledSubmit] = useState(false);
+
   const chatEl = useRef<HTMLDivElement>(null);
 
   trpc.commentEmitter.useSubscription(undefined, {
@@ -72,14 +74,22 @@ function Comments() {
     if (data.ok) commenterName.refetch();
   };
 
-  const sendComment = (e: FormEvent<HTMLFormElement>) => {
+  const sendComment = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const content = (e.target as any)[0].value;
     (e.target as any)[0].value = "";
 
-    const data = commentSubmitMutation.mutateAsync({
+    setDisabledSubmit(true);
+
+    const data = await commentSubmitMutation.mutateAsync({
       text: content,
     });
+
+    if (data.ok) {
+      setTimeout(() => {
+        setDisabledSubmit(false);
+      }, 1000);
+    }
   };
   if (!commenterName.data) return <div>Loading...</div>;
 
@@ -88,7 +98,7 @@ function Comments() {
       <div className="flex h-full flex-col rounded-xl bg-gray-100 p-3">
         <h1 className="text-center text-3xl font-bold">Livechat</h1>
         <div
-          className="flex flex-1 items-end overflow-y-auto"
+          className="flex flex-1 items-end justify-center overflow-y-auto"
           ref={chatEl}
           onScroll={(e) => {
             if (
@@ -120,8 +130,8 @@ function Comments() {
                   Du musst deinen Namen angeben, um zu chatten
                 </h3>
                 <input
-                  min={3}
-                  max={20}
+                  minLength={3}
+                  maxLength={20}
                   type="text"
                   className="flex-1 rounded border-2 border-black py-2 pl-3 focus:border-primary-500 focus:outline-none"
                   placeholder="Dein Name"
@@ -140,11 +150,16 @@ function Comments() {
           onSubmit={sendComment}
         >
           <input
+            minLength={1}
+            maxLength={100}
             type="text"
-            className="flex-1 rounded border-2 border-black py-2 pl-3 focus:border-primary-500 focus:outline-none"
+            className="max-w-[calc(100%-5rem)] flex-1 rounded border-2 border-black py-2 pl-3 focus:border-primary-500 focus:outline-none"
             placeholder="Schreibe eine Nachricht..."
           />
-          <button className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-700">
+          <button
+            disabled={disabledSubmit}
+            className="w-fit rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-700"
+          >
             <img
               className="h-5 fill-white"
               src="/icons/paper-plane-light.svg"

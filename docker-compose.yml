@@ -17,7 +17,8 @@ services:
     restart: unless-stopped
     environment:
       - ELGG_SECRET=adfef
+      - ELGG_ADMIN=pascal_bester_scorer
       - DATABASE_URL=postgres://admin:admin@postgres:5432/liveticker
     build: ./
     ports:
-    - '3000:3000'
+    - '1000:3000'

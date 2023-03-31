@@ -14,35 +14,34 @@ import { createContext } from "./context";
 const server = fastify();
 
 server.get("/ping", async (_, res) => {
-  res.send("pong");
+    res.send("pong");
 });
 
-//serve static files from client/dist with the get route /
 server.register(fstatic, {
-  root: path.join(__dirname, "..", "..", "client", "dist"),
-  prefix: "/",
+    root: path.join(__dirname, "..", "..", "client", "dist"),
+    prefix: "/",
 });
 
 server.register(ws);
 server.register(fastifyTRPCPlugin, {
-  prefix: "/trpc",
-  useWSS: true,
-  useWss: true,
-  trpcOptions: { router: appRouter, createContext },
+    prefix: "/trpc",
+    useWSS: true,
+    useWss: true,
+    trpcOptions: { router: appRouter, createContext },
 });
 
 server.register(cors, {
-  origin: true,
+    origin: true,
 });
 
 adminRoutes(server);
 
 (async () => {
-  try {
-    await server.listen({ port: 3000, host: "0.0.0.0" });
-    console.log(`Server listening on 3000`);
-  } catch (err) {
-    server.log.error(err);
-    process.exit(1);
-  }
+    try {
+        await server.listen({ port: 3000, host: "0.0.0.0" });
+        console.log(`Server listening on 3000`);
+    } catch (err) {
+        server.log.error(err);
+        process.exit(1);
+    }
 })();
