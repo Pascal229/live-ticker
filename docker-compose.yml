@@ -9,8 +9,6 @@ services:
       POSTGRES_DB: liveticker
     volumes:
       - ./postgres:/var/lib/postgresql/data
-    ports:
-      - '5432:5432'
   app:
     depends_on:
       - postgres
@@ -20,10 +18,12 @@ services:
       - ELGG_ADMIN=$ELGG_ADMIN
       - DATABASE_URL=postgres://admin:admin@postgres:5432/liveticker
     build: ./
+    ports:
+    - '10022:3000'
   nginx:
     build: ./nginx
     depends_on:
       - app
     ports:
-    - '10022:80'
     - '25565:1935'
+    - '10023:80'

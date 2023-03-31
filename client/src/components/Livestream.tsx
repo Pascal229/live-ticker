@@ -16,7 +16,7 @@ function Livestream() {
           controls={true}
           muted={true}
           autoPlay={true}
-          src="/stream/.m3u8"
+          src="https://stream.uhc-elgg.ch/.m3u8"
           width="100%"
           height="auto"
         />
