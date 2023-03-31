@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { trpc } from "../client";
 
 type CommentType = {
@@ -28,6 +28,19 @@ function Comments() {
   );
 
   const [disabledSubmit, setDisabledSubmit] = useState(false);
+  const [viewCount, setViewCount] = useState(0);
+
+  const viewCountQuery = trpc.viewCount.useQuery();
+
+  useEffect(() => {
+    if (viewCountQuery?.data) setViewCount(viewCountQuery.data);
+  }, [viewCountQuery.data]);
+
+  trpc.viewCountEmitter.useSubscription(undefined, {
+    onData: (data) => {
+      setViewCount(data);
+    },
+  });
 
   const chatEl = useRef<HTMLDivElement>(null);
 
@@ -94,7 +107,10 @@ function Comments() {
   if (!commenterName.data) return <div>Loading...</div>;
 
   return (
-    <div className="h-[30rem] p-5 lg:h-screen">
+    <div className="flex h-[30rem] flex-col gap-3 p-5 lg:h-screen">
+      <div className="flex h-full flex-1 flex-col rounded-xl bg-gray-100 p-3 text-center font-bold">
+        {viewCount + 1} Zuschauer
+      </div>
       <div className="flex h-full flex-col rounded-xl bg-gray-100 p-3">
         <h1 className="text-center text-3xl font-bold">Livechat</h1>
         <div
@@ -151,7 +167,7 @@ function Comments() {
         >
           <input
             minLength={1}
-            maxLength={100}
+            maxLength={200}
             type="text"
             className="max-w-[calc(100%-5rem)] flex-1 rounded border-2 border-black py-2 pl-3 focus:border-primary-500 focus:outline-none"
             placeholder="Schreibe eine Nachricht..."

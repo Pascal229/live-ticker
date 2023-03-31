@@ -23,7 +23,7 @@ export enum GameStatus {
 
 function Ticker(props: { game: Game }) {
   return (
-    <div className="flex h-[calc(100%-9/16*100%)] flex-col bg-gray-100 md:flex-1">
+    <div className="flex flex-col overflow-y-hidden bg-gray-100 md:flex-1">
       <TickerHeader game={props.game} />
       <TickerEvents game={props.game} />
     </div>
@@ -54,6 +54,7 @@ const TickerHeader = (props: { game: Game }) => {
         </div>
         {isStarted ? (
           <div className="flex flex-col justify-end">
+            {/* <h3 className="text-sm text-center">100 Zuschauer</h3> */}
             <div className="flex items-center gap-5">
               <span className="text-3xl font-bold md:text-5xl">
                 {homeTeam.score}
