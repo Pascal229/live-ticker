@@ -13,9 +13,10 @@ function Livestream() {
       <div className="relative aspect-video bg-red-700">
         <ReactHlsPlayer
           playerRef={playerRef}
+          controls={true}
           muted={true}
           autoPlay={true}
-          src="https://live.uhc-elgg.ch/stream"
+          src="https://live.janic.io/live/.m3u8"
           width="100%"
           height="auto"
         />
