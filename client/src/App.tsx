@@ -6,9 +6,13 @@ import superjson from "superjson";
 import Liveticker from "./Liveticker";
 
 function App() {
+  let host = window.location.host;
+  if (host.includes("localhost")) host = "localhost:3000";
+
   const [queryClient] = useState(() => new QueryClient());
   const [wsClient] = useState(() =>
-    createWSClient({ url: `ws://localhost:3000/trpc` })
+    // make this relative to the current page
+    createWSClient({ url: `ws://${host}/trpc` })
   );
   const [trpcClient] = useState(() =>
     trpc.createClient({
@@ -18,7 +22,9 @@ function App() {
             return op.type === "subscription";
           },
           true: wsLink({ client: wsClient }),
-          false: httpBatchLink({ url: `http://localhost:3000/trpc` }),
+          false: httpBatchLink({
+            url: `${window.location.protocol}//${host}/trpc`,
+          }),
         }),
       ],
       transformer: superjson,

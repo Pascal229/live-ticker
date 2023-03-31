@@ -157,12 +157,13 @@ export const getGame = async (
                 score: targetGame.guestScore,
             },
         ],
+        startDateTime: targetGame.date,
     };
 };
 
 export const getCurrentGame = (): Promise<Game | null> => {
     const now = new Date();
-    const inTenMinutes = new Date(now.getTime() + 1000 * 60 * 10);
+    const inTenMinutes = new Date(now.getTime() + 1000 * 60 * 1000);
 
     return getGame({
         date: {

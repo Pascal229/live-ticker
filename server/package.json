@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "dev": "nodemon index.ts",
+    "dev": "nodemon --ext \"ts\" index.ts",
     "start": "ts-node src/index.ts",
     "prod": "node dist/index.js",
     "prisma": "prisma generate && prisma db push"

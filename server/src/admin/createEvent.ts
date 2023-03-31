@@ -115,7 +115,7 @@ export default async (req: FastifyRequest, res: FastifyReply) => {
                 ok: true,
                 warning: "Unexpected error: Event not found in game log.",
             });
-        res.send({ ok: true, result: newGame });
+        res.send({ ok: true, result: newEvent });
         gameEventEmitter.emit("event", newGame);
     }
 };

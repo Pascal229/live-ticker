@@ -7,12 +7,6 @@ import type { Game, GameUpdateEvent } from "../../server/src/trpc";
 
 interface Event {}
 
-interface Team {
-  name: string;
-  score: number;
-  events: Event[];
-}
-
 const Liveticker = () => {
   const [game, setGame] = useState<Game>();
   const latestGameRef = useRef<Game>();
@@ -38,8 +32,8 @@ const Liveticker = () => {
 
   return (
     <div className="flex justify-center bg-gray-300">
-      <div className="flex h-screen w-full max-w-[1500px] flex-col lg:flex-row">
-        <div className="flex flex-1 flex-col">
+      <div className="flex h-full w-full max-w-[1500px] flex-col lg:h-screen lg:flex-row">
+        <div className="flex flex-1 flex-col ">
           {/* <p>{JSON.stringify(game.data)}</p> */}
           <Livestream />
           <Ticker game={game} />
