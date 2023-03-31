@@ -150,13 +150,14 @@ export const getGame = async (criteria: any): Promise<Game | null> => {
 	};
 };
 
-export const getCurrentGame = (): Promise<Game | null> => {
+export const getCurrentGame = async (): Promise<Game | null> => {
 	const now = new Date();
 	const inTenMinutes = new Date(now.getTime() + 1000 * 60 * 1000);
 
-	return getGame({
+	const game = await getGame({
 		date: {
 			lt: inTenMinutes,
 		},
 	});
+	if (!game) return getGame({});
 };

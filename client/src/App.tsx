@@ -12,7 +12,9 @@ function App() {
   const [queryClient] = useState(() => new QueryClient());
   const [wsClient] = useState(() =>
     // make this relative to the current page
-    createWSClient({ url: `ws://${host}/trpc` })
+    createWSClient({
+      url: `ws${host.includes("localhost") ? "" : "s"}://${host}/trpc`,
+    })
   );
   const [trpcClient] = useState(() =>
     trpc.createClient({
