@@ -49,7 +49,7 @@ server.get('/metrics', (_, res) => {
 	};
 	res.send(
 		Object.entries(data)
-			.map((key, value) => key + '\t' + value.toString())
+			.map(([key, value]) => key + '\t' + value.toString())
 			.join('\n')
 	);
 });
