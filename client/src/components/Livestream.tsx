@@ -11,15 +11,26 @@ function Livestream() {
   return (
     <>
       <div className="relative aspect-video bg-red-700">
-        <ReactHlsPlayer
-          playerRef={playerRef}
-          controls={true}
-          muted={true}
-          autoPlay={true}
-          src="https://stream.uhc-elgg.ch/.m3u8"
-          width="100%"
-          height="auto"
-        />
+        {playerRef.current &&
+        playerRef.current.canPlayType("application/vnd.apple.mpegURL") ? (
+          <video controls muted autoPlay width="100%">
+            <source
+              src="https://stream.uhc-elgg.ch/.m3u8"
+              type="application/vnd.apple.mpegurl"
+            />
+          </video>
+        ) : (
+          <ReactHlsPlayer
+            playerRef={playerRef}
+            controls={true}
+            muted={true}
+            autoPlay={true}
+            src="https://stream.uhc-elgg.ch/.m3u8"
+            width="100%"
+            height="auto"
+          />
+        )}
+
         <button
           onClick={() => {
             playerRef.current.muted = false;
