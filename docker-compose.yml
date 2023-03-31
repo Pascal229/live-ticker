@@ -16,9 +16,14 @@ services:
       - postgres
     restart: unless-stopped
     environment:
-      - ELGG_SECRET=adfef
-      - ELGG_ADMIN=pascal_bester_scorer
+      - ELGG_SECRET=$ELGG_SECRET
+      - ELGG_ADMIN=$ELGG_ADMIN
       - DATABASE_URL=postgres://admin:admin@postgres:5432/liveticker
     build: ./
+  nginx:
+    build: ./nginx
+    depends_on:
+      - app
     ports:
-    - '10022:3000'
+    - '10022:80'
+    - '25565:1935'

@@ -16,7 +16,7 @@ function Livestream() {
           controls={true}
           muted={true}
           autoPlay={true}
-          src="https://live.janic.io/live/.m3u8"
+          src="/stream/.m3u8"
           width="100%"
           height="auto"
         />
