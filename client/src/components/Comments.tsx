@@ -14,6 +14,15 @@ type CommentType = {
 function Comments() {
   const [incomingComments, setIncomingComments] = useState<CommentType[]>([]);
 
+  const chatEl = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    chatEl.current?.scrollTo({
+      top: chatEl.current.scrollHeight,
+      behavior: "smooth",
+    });
+  };
+
   const commenterName = trpc.commenterName.useQuery();
   const commenterNameMutation = trpc.setCommenterName.useMutation();
   const commentSubmitMutation = trpc.submitComment.useMutation();
@@ -24,6 +33,7 @@ function Comments() {
     {
       getNextPageParam: (lastpage) => lastpage.nextCursor,
       initialCursor: 0,
+      onSettled: (data) => setTimeout(() => scrollToBottom(), 100),
     }
   );
 
@@ -41,8 +51,6 @@ function Comments() {
       setViewCount(data);
     },
   });
-
-  const chatEl = useRef<HTMLDivElement>(null);
 
   trpc.commentEmitter.useSubscription(undefined, {
     onData: (data) => {
@@ -72,12 +80,7 @@ function Comments() {
   )
     setIncomingComments([]);
 
-  useEffect(() => {
-    chatEl.current?.scrollTo({
-      top: chatEl.current.scrollHeight,
-      behavior: "smooth",
-    });
-  }, [incomingComments]);
+  useEffect(() => void scrollToBottom(), [incomingComments]);
 
   const login = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -111,7 +114,7 @@ function Comments() {
       <div className="flex h-full flex-1 flex-col rounded-xl bg-gray-100 p-3 text-center font-bold">
         {viewCount + 1} Zuschauer
       </div>
-      <div className="flex h-full flex-col rounded-xl bg-gray-100 p-3">
+      <div className="flex h-full flex-col overflow-hidden rounded-xl bg-gray-100 p-3">
         <h1 className="text-center text-3xl font-bold">Livechat</h1>
         <div
           className="flex flex-1 items-end justify-center overflow-y-auto"
@@ -137,26 +140,36 @@ function Comments() {
               ))}
             </div>
           ) : (
-            <div className="flex h-full flex-col items-center justify-center">
-              <form
-                className={`flex w-full max-w-sm flex-col gap-5`}
-                onSubmit={login}
-              >
-                <h3 className="text-md text-center font-bold">
-                  Du musst deinen Namen angeben, um zu chatten
-                </h3>
-                <input
-                  minLength={3}
-                  maxLength={20}
-                  type="text"
-                  className="flex-1 rounded border-2 border-black py-2 pl-3 focus:border-primary-500 focus:outline-none"
-                  placeholder="Dein Name"
+            <div className="h-fit max-h-full w-full">
+              {comments.map((comment) => (
+                <Comment
+                  key={comment.id}
+                  content={comment.content}
+                  myself={commenterName.data.result?.id === comment.userId}
+                  name={comment.user.name}
                 />
-                <button className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-700">
-                  {commenterNameMutation.isLoading ? "Laden..." : "Los chatten"}
-                </button>
-              </form>
+              ))}
             </div>
+            // <div className="flex h-full flex-col items-center justify-center">
+            //   <form
+            //     className={`flex w-full max-w-sm flex-col gap-5`}
+            //     onSubmit={login}
+            //   >
+            //     <h3 className="text-md text-center font-bold">
+            //       Du musst deinen Namen angeben, um zu chatten
+            //     </h3>
+            //     <input
+            //       minLength={3}
+            //       maxLength={20}
+            //       type="text"
+            //       className="flex-1 rounded border-2 border-black py-2 pl-3 focus:border-primary-500 focus:outline-none"
+            //       placeholder="Dein Name"
+            //     />
+            //     <button className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-700">
+            //       {commenterNameMutation.isLoading ? "Laden..." : "Los chatten"}
+            //     </button>
+            //   </form>
+            // </div>
           )}
         </div>
         <form
