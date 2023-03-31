@@ -16,10 +16,6 @@ RUN cd server && yarn
 COPY client ./client
 COPY server ./server
 
-ENV DATABASE_URL=postgresql://postgres:postgres@localhost:5432/postgres?schema=public
-
-RUN cd server && yarn prisma generate
-
 # Build the client for production
 RUN cd client && yarn build
 
