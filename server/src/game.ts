@@ -159,5 +159,6 @@ export const getCurrentGame = async (): Promise<Game | null> => {
 			lt: inTenMinutes,
 		},
 	});
-	if (!game) return getGame({});
+	if (game) return game;
+	else return getGame({});
 };
