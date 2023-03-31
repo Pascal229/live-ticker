@@ -23,8 +23,13 @@ export const gameEventEmitter = new EventEmitter();
 export const chatEventEmitter = new EventEmitter();
 export const viewCountEmitter = new EventEmitter();
 
-let viewCount = 0;
+export let viewCount = 0;
+export let commentCount = 0;
+export let accountCount = 0;
+export let totalViewCount = 0;
+
 const updateViewCounter = (change: number) => {
+	if (change === 1) totalViewCount += 1;
 	viewCount += change;
 	viewCountEmitter.emit('update', viewCount);
 };
@@ -141,6 +146,8 @@ export const appRouter = createTRPCRouter({
 				cookieExpiration.getTime() + 1000 * 60 * 60 * 24 * 365
 			);
 
+			accountCount++;
+
 			ctx.res.header(
 				'set-cookie',
 				cookie.serialize(
@@ -182,6 +189,7 @@ export const appRouter = createTRPCRouter({
 					user: true,
 				},
 			});
+			commentCount++;
 			chatEventEmitter.emit('event', {
 				id: comment.id,
 				action: 'create_comment',

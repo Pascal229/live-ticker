@@ -152,7 +152,7 @@ export const getGame = async (criteria: any): Promise<Game | null> => {
 
 export const getCurrentGame = async (): Promise<Game | null> => {
 	const now = new Date();
-	const inTenMinutes = new Date(now.getTime() + 1000 * 60 * 1000);
+	const inTenMinutes = new Date(now.getTime() + 1000 * 60 * 10);
 
 	const game = await getGame({
 		date: {
