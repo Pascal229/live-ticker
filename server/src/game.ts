@@ -1,18 +1,7 @@
-import { Prisma } from '@prisma/client';
 import db from './db';
-import {
-	Game,
-	GameGoalEvent,
-	GamePenaltyOrPenaltyKickEvent,
-	GameStateUpdateEvent,
-	GameStatus,
-	GameUpdateEvent,
-	GameUpdateType,
-} from './trpc';
+import { Game, GameStatus, GameUpdateEvent, GameUpdateType } from './trpc';
 
-export const getGame = async (
-	criteria: Prisma.GameWhereInput
-): Promise<Game | null> => {
+export const getGame = async (criteria: any): Promise<Game | null> => {
 	const targetGame = await db.game.findFirst({
 		where: criteria,
 		orderBy: {

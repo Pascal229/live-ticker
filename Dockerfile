@@ -28,9 +28,6 @@ WORKDIR /app
 # Copy the package.json and yarn.lock files for the server
 COPY server/package.json server/yarn.lock ./
 
-# Install app dependencies for the server
-RUN yarn
-
 # Copy the built client code from the previous stage to the container
 COPY --from=build /app/client/dist ./client/dist
 
@@ -38,4 +35,4 @@ COPY --from=build /app/client/dist ./client/dist
 COPY server ./server
 
 # Start the server
-CMD cd ./server && yarn build && yarn prisma && yarn prod
+CMD cd ./server && yarn && yarn build && yarn prisma && yarn prod

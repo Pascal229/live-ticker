@@ -8,7 +8,6 @@ import db from './db';
 import cookie from 'cookie';
 import jwt from 'jsonwebtoken';
 import { getCurrentGame } from './game';
-import { type Comment, type User } from '@prisma/client';
 
 const t = initTRPC.context<Context>().create({
 	transformer: superjson,
@@ -34,7 +33,10 @@ export interface ChatEvent {
 	id: number;
 	action: 'create_comment';
 	text: string;
-	user: User;
+	user: {
+		id: number;
+		name: string;
+	};
 }
 
 export interface Team {
