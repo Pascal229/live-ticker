@@ -47,7 +47,7 @@ function Comments() {
 
   const comments = [
     ...(commentInfiniteQuery.data?.pages
-      .map((page) => page.items.map((comment) => comment))
+      .map((page) => page.items)
       .flat()
       .reverse() ?? []),
     ...incomingComments,
