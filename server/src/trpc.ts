@@ -22,6 +22,9 @@ export const publicProcedure = t.procedure;
 export const gameEventEmitter = new EventEmitter();
 export const chatEventEmitter = new EventEmitter();
 export const viewCountEmitter = new EventEmitter();
+gameEventEmitter.setMaxListeners(Infinity);
+chatEventEmitter.setMaxListeners(Infinity);
+viewCountEmitter.setMaxListeners(Infinity);
 
 export let viewCount = 0;
 export let commentCount = 0;

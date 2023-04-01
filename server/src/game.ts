@@ -84,7 +84,7 @@ export const getGame = async (criteria: any): Promise<Game | null> => {
 			global_events.push({
 				id: event.id,
 				timestamp: event.time,
-				display_time: Math.floor(game_time / 60 / 1000),
+				display_time: Math.floor(game_time / 60 / 1000) + 1,
 				game_id: targetGame.id,
 				type: GameUpdateType.STATE_UDPATE,
 				new_state: last_status,
@@ -103,7 +103,7 @@ export const getGame = async (criteria: any): Promise<Game | null> => {
 				id: event.id,
 				timestamp: event.time,
 				game_id: targetGame.id,
-				display_time: Math.floor(game_time / 60 / 1000),
+				display_time: Math.floor(game_time / 60 / 1000) + 1,
 				type: GameUpdateType.STATE_UDPATE,
 				new_state: last_status,
 			});
@@ -122,7 +122,7 @@ export const getGame = async (criteria: any): Promise<Game | null> => {
 						: GameUpdateType.PENALTY_KICK,
 				assist: event?.assistingPlayer || null,
 				game_id: targetGame.id,
-				display_time: Math.floor(game_time / 60 / 1000),
+				display_time: Math.floor(game_time / 60 / 1000) + 1,
 				player: event.scorerPlayer,
 				team_index: event.teamIndex,
 				timestamp: event.time,
