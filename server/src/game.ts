@@ -72,7 +72,6 @@ export const getGame = async (criteria: any): Promise<Game | null> => {
 		if (TIME_STOPPERS.includes(event.type)) {
 			if (TIME_STARTERS_ENUM.includes(last_status)) {
 				game_time += event.time.getTime() - last_timestamp.getTime();
-
 				last_timestamp = event.time;
 			}
 			last_status =
@@ -152,11 +151,11 @@ export const getGame = async (criteria: any): Promise<Game | null> => {
 
 export const getCurrentGame = async (): Promise<Game | null> => {
 	const now = new Date();
-	const inTenMinutes = new Date(now.getTime() + 1000 * 60 * 10);
+	const inAnHour = new Date(now.getTime() + 1000 * 60 * 60);
 
 	const game = await getGame({
 		date: {
-			lt: inTenMinutes,
+			lt: inAnHour,
 		},
 	});
 	if (game) return game;
