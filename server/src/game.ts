@@ -55,7 +55,8 @@ export const getGame = async (criteria: any): Promise<Game | null> => {
 	let game_time = 0;
 
 	for (let event of targetGame.history.sort(
-		(a, b) => a.time.getTime() - b.time.getTime()
+		(a: { time: Date }, b: { time: Date }) =>
+			a.time.getTime() - b.time.getTime()
 	)) {
 		const TIME_STOPPERS = ['BREAK', 'FINISH', 'PAUSE'];
 		const TIME_STOPPERS_ENUM = [
