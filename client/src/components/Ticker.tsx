@@ -120,9 +120,17 @@ const TickerEvents = (props: { game: Game }) => {
 
   const events = props.game.events;
 
-  const sortedEvents = events.sort(
-    (a, b) => a.timestamp.getTime() - b.timestamp.getTime()
-  );
+  const sortedEvents = events
+    .sort((a, b) => a.timestamp.getTime() - b.timestamp.getTime())
+    .filter(
+      (event) =>
+        event.type !== GameUpdateType.STATE_UDPATE ||
+        [
+          GameStatus.BREAK,
+          GameStatus.FINISHED,
+          GameStatus.NOT_STARTED,
+        ].includes(event.new_state)
+    );
 
   const eventsContainer = useRef<HTMLDivElement>(null);
 
