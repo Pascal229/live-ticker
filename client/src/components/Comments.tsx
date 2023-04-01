@@ -140,36 +140,26 @@ function Comments() {
               ))}
             </div>
           ) : (
-            <div className="h-fit max-h-full w-full">
-              {comments.map((comment) => (
-                <Comment
-                  key={comment.id}
-                  content={comment.content}
-                  myself={commenterName.data.result?.id === comment.userId}
-                  name={comment.user.name}
+            <div className="flex h-full flex-col items-center justify-center">
+              <form
+                className={`flex w-full max-w-sm flex-col gap-5`}
+                onSubmit={login}
+              >
+                <h3 className="text-md text-center font-bold">
+                  Du musst deinen Namen angeben, um zu chatten
+                </h3>
+                <input
+                  minLength={3}
+                  maxLength={20}
+                  type="text"
+                  className="flex-1 rounded border-2 border-black py-2 pl-3 focus:border-primary-500 focus:outline-none"
+                  placeholder="Dein Name"
                 />
-              ))}
+                <button className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-700">
+                  {commenterNameMutation.isLoading ? "Laden..." : "Los chatten"}
+                </button>
+              </form>
             </div>
-            // <div className="flex h-full flex-col items-center justify-center">
-            //   <form
-            //     className={`flex w-full max-w-sm flex-col gap-5`}
-            //     onSubmit={login}
-            //   >
-            //     <h3 className="text-md text-center font-bold">
-            //       Du musst deinen Namen angeben, um zu chatten
-            //     </h3>
-            //     <input
-            //       minLength={3}
-            //       maxLength={20}
-            //       type="text"
-            //       className="flex-1 rounded border-2 border-black py-2 pl-3 focus:border-primary-500 focus:outline-none"
-            //       placeholder="Dein Name"
-            //     />
-            //     <button className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-700">
-            //       {commenterNameMutation.isLoading ? "Laden..." : "Los chatten"}
-            //     </button>
-            //   </form>
-            // </div>
           )}
         </div>
         <form
