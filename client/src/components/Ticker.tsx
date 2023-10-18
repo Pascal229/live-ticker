@@ -23,7 +23,7 @@ export enum GameStatus {
 
 function Ticker(props: { game: Game }) {
   return (
-    <div className="flex flex-col overflow-y-hidden bg-gray-100 md:flex-1">
+    <div className="flex flex-col h-full overflow-y-hidden bg-white md:flex-1">
       <TickerHeader game={props.game} />
       <TickerEvents game={props.game} />
     </div>
@@ -44,12 +44,12 @@ const TickerHeader = (props: { game: Game }) => {
   }, []);
 
   return (
-    <div className="flex justify-between gap-5 border-b-4 border-black p-5">
-      <div className="flex flex-1 gap-5">
+    <div className="flex bg-slate-200 justify-between gap-5 border-b-4 border-slate-500 p-5">
+      <div className="flex gap-5 bg-white rounded-lg w-fit items-center">
         <TeamImage teamKey={homeTeam.key} />
       </div>
-      <div className="flex justify-center gap-8">
-        <div className="hidden items-center text-lg md:text-3xl lg:flex">
+      <div className="flex justify-center gap-8 flex-1">
+        <div className="hidden flex-1 items-center text-lg md:text-2xl md:flex">
           {homeTeam.name}
         </div>
         {isStarted ? (
@@ -91,11 +91,11 @@ const TickerHeader = (props: { game: Game }) => {
           </div>
         )}
 
-        <div className="hidden items-center text-lg md:text-3xl lg:flex">
+        <div className="hidden items-center justify-end flex-1 text-lg md:text-2xl lg:flex">
           {guestTeam.name}
         </div>
       </div>
-      <div className="flex flex-1 justify-end gap-5">
+      <div className="flex justify-end gap-5 bg-white rounded-lg items-center">
         <TeamImage teamKey={guestTeam.key} />
       </div>
     </div>
@@ -143,9 +143,9 @@ const TickerEvents = (props: { game: Game }) => {
   return (
     <div
       ref={eventsContainer}
-      className="flex flex-col gap-2 overflow-y-scroll p-5"
+      className="flex flex-col gap-2 overflow-y-scroll p-5 pb-20"
     >
-      <div className="mb-5 flex justify-between">
+      <div className="mb-5 flex justify-between sticky top-0 bg-white">
         <div className="text-md font-bold">{homeTeam.name}</div>
         <div className="text-md font-bold">{guestTeam.name}</div>
       </div>

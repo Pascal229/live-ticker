@@ -14,7 +14,6 @@ RUN cd server && yarn
 
 # Copy the client and server code to the container
 COPY client ./client
-COPY server ./server
 
 # Build the client for production
 RUN cd client && yarn build

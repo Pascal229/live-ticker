@@ -31,15 +31,15 @@ const Liveticker = () => {
   if (!game) return <div>Loading...</div>;
 
   return (
-    <div className="flex justify-center bg-gray-300">
+    <div className="flex justify-center bg-slate-300">
       <div className="flex h-full w-full flex-col lg:h-screen lg:flex-row">
-        <div className="flex flex-col max-w-[3000px]">
+        <div className="flex flex-col flex-1">
           {/* <p>{JSON.stringify(game.data)}</p> */}
           <Livestream />
-          <Ticker game={game} />
-        </div>
-        <div className="h-full w-full flex-1">
           <Comments />
+        </div>
+        <div className="h-full overflow-hidden w-full flex-1">
+          <Ticker game={game} />
         </div>
       </div>
     </div>

@@ -2,6 +2,8 @@ import React, { MutableRefObject, useRef, useState } from "react";
 import ReactHlsPlayer from "react-hls-player";
 import mutedIcon from "../../public/icons/volume-xmark.svg";
 
+const livestreamHost = "http://localhost:10023/.m3u8"
+
 function Livestream() {
   const playerRef =
     useRef<HTMLVideoElement>() as MutableRefObject<HTMLVideoElement>;
@@ -15,7 +17,7 @@ function Livestream() {
           playerRef.current.canPlayType("application/vnd.apple.mpegURL") ? (
           <video controls muted autoPlay width="100%">
             <source
-              src="https://stream.uhc-elgg.ch/.m3u8"
+              src={livestreamHost}
               type="application/vnd.apple.mpegurl"
             />
           </video>
@@ -25,7 +27,7 @@ function Livestream() {
             controls={true}
             muted={true}
             autoPlay={true}
-            src="https://stream.uhc-elgg.ch/.m3u8"
+            src={livestreamHost}
             width="100%"
             height="auto"
           />

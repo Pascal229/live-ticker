@@ -152,10 +152,10 @@ function Comments() {
                   minLength={3}
                   maxLength={20}
                   type="text"
-                  className="flex-1 rounded border-2 border-black py-2 pl-3 focus:border-primary-500 focus:outline-none"
+                  className="flex-1 rounded border-2 border-black py-2 pl-3 focus:border-primary focus:outline-none"
                   placeholder="Dein Name"
                 />
-                <button className="rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-700">
+                <button className="rounded bg-primary px-4 py-2 font-bold text-white hover:bg-primary-700">
                   {commenterNameMutation.isLoading ? "Laden..." : "Los chatten"}
                 </button>
               </form>
@@ -171,12 +171,12 @@ function Comments() {
             minLength={1}
             maxLength={200}
             type="text"
-            className="max-w-[calc(100%-5rem)] flex-1 rounded border-2 border-black py-2 pl-3 focus:border-primary-500 focus:outline-none"
+            className="max-w-[calc(100%-5rem)] flex-1 rounded border-2 border-black py-2 pl-3 focus:border-primary focus:outline-none"
             placeholder="Schreibe eine Nachricht..."
           />
           <button
             disabled={disabledSubmit}
-            className="w-fit rounded bg-primary-500 px-4 py-2 font-bold text-white hover:bg-primary-700"
+            className="w-fit rounded bg-primary px-4 py-2 font-bold text-white hover:bg-primary-700"
           >
             <img
               className="h-5 fill-white"

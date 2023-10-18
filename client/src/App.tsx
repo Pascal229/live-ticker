@@ -13,7 +13,7 @@ function App() {
   const [wsClient] = useState(() =>
     // make this relative to the current page
     createWSClient({
-      url: `ws${host.includes("localhost") ? "" : "s"}://${host}/trpc`,
+      url: `ws${window.location.protocol === "http:" ? "" : "s"}://${host}/trpc`,
     })
   );
   const [trpcClient] = useState(() =>
