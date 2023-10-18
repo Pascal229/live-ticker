@@ -68,14 +68,14 @@ const TickerHeader = (props: { game: Game }) => {
               {props.game.status === GameStatus.FIRST_PERIOD
                 ? "1. Halbzeit"
                 : props.game.status === GameStatus.SECOND_PERIOD
-                ? "2. Halbzeit"
-                : props.game.status === GameStatus.PAUSED
-                ? "Unterbrechung"
-                : props.game.status === GameStatus.BREAK
-                ? "Pause"
-                : props.game.status === GameStatus.FINISHED
-                ? "Beendet"
-                : "Unbekannt"}
+                  ? "2. Halbzeit"
+                  : props.game.status === GameStatus.PAUSED
+                    ? "Unterbrechung"
+                    : props.game.status === GameStatus.BREAK
+                      ? "Pause"
+                      : props.game.status === GameStatus.FINISHED
+                        ? "Beendet"
+                        : "Unbekannt"}
             </h3>
           </div>
         ) : (
@@ -83,7 +83,7 @@ const TickerHeader = (props: { game: Game }) => {
             <span className="text-sm">Startet am:</span>
             <span className="text-3xl font-bold md:text-5xl">
               {/* Print the date in this format 10:00 */}
-              {props.game.startDateTime.toLocaleTimeString("de-DE", {
+              {props.game.startDateTime.toLocaleTimeString(navigator.language, {
                 hour: "2-digit",
                 minute: "2-digit",
               })}
@@ -178,9 +178,8 @@ const TickerEvent = (props: { event: GameUpdateEvent; game: Game }) => {
   // props.event.
   return (
     <div
-      className={`flex items-center gap-2 text-sm md:text-lg ${
-        props.event.team_index === 0 ? "justify-start" : "flex-row-reverse "
-      }`}
+      className={`flex items-center gap-2 text-sm md:text-lg ${props.event.team_index === 0 ? "justify-start" : "flex-row-reverse "
+        }`}
     >
       <>
         <span className="font-bold">{`${props.event.display_time}'`}</span>

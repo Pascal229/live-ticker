@@ -110,7 +110,7 @@ function Comments() {
   if (!commenterName.data) return <div>Loading...</div>;
 
   return (
-    <div className="flex h-[30rem] flex-col gap-3 p-5 lg:h-screen">
+    <div className="flex w-full h-[30rem] flex-col gap-3 p-5 lg:h-screen">
       <div className="flex h-full flex-1 flex-col rounded-xl bg-gray-100 p-3 text-center font-bold">
         {viewCount + 1} Zuschauer
       </div>
@@ -163,9 +163,8 @@ function Comments() {
           )}
         </div>
         <form
-          className={`flex justify-between gap-5 pt-2 ${
-            commenterName.data.ok ? "" : "pointer-events-none opacity-25"
-          }`}
+          className={`flex justify-between gap-5 pt-2 ${commenterName.data.ok ? "" : "pointer-events-none opacity-25"
+            }`}
           onSubmit={sendComment}
         >
           <input
@@ -194,14 +193,12 @@ function Comments() {
 const Comment = (props: { content: string; myself: boolean; name: string }) => {
   return (
     <div
-      className={`flex items-center gap-3 rounded-xl p-3 ${
-        props.myself ? "justify-end" : ""
-      }`}
+      className={`flex items-center gap-3 rounded-xl p-3 ${props.myself ? "justify-end" : ""
+        }`}
     >
       <div
-        className={`max-w-[60%] rounded  px-2 ${
-          props.myself ? "bg-primary-300" : "bg-gray-300"
-        }`}
+        className={`max-w-[60%] rounded  px-2 ${props.myself ? "bg-primary-300" : "bg-gray-300"
+          }`}
       >
         <p className="font-bold">{props.name}</p>
         <p className="w-fit max-w-full overflow-hidden">{props.content}</p>

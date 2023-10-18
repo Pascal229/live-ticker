@@ -5,7 +5,7 @@ import Comments from "./components/Comments";
 import Ticker from "./components/Ticker";
 import type { Game, GameUpdateEvent } from "../../server/src/trpc";
 
-interface Event {}
+interface Event { }
 
 const Liveticker = () => {
   const [game, setGame] = useState<Game>();
@@ -32,13 +32,13 @@ const Liveticker = () => {
 
   return (
     <div className="flex justify-center bg-gray-300">
-      <div className="flex h-full w-full max-w-[1500px] flex-col lg:h-screen lg:flex-row">
-        <div className="flex flex-1 flex-col ">
+      <div className="flex h-full w-full flex-col lg:h-screen lg:flex-row">
+        <div className="flex flex-col max-w-[3000px]">
           {/* <p>{JSON.stringify(game.data)}</p> */}
           <Livestream />
           <Ticker game={game} />
         </div>
-        <div className="h-full w-full lg:max-w-sm">
+        <div className="h-full w-full flex-1">
           <Comments />
         </div>
       </div>
