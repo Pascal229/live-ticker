@@ -111,10 +111,10 @@ function Comments() {
 
   return (
     <div className="flex w-full h-[30rem] flex-col gap-3 p-5 lg:h-screen">
-      <div className="flex h-full flex-1 flex-col rounded-xl bg-gray-100 p-3 text-center font-bold">
+      <div className="flex h-full flex-1 flex-col rounded-xl bg-slate-800 text-white p-3 text-center font-bold">
         {viewCount + 1} Zuschauer
       </div>
-      <div className="flex h-full flex-col overflow-hidden rounded-xl bg-gray-100 p-3">
+      <div className="flex h-full flex-col overflow-hidden rounded-xl bg-slate-800 text-white p-3">
         <h1 className="text-center text-3xl font-bold">Livechat</h1>
         <div
           className="flex flex-1 items-end justify-center overflow-y-auto"
@@ -152,7 +152,7 @@ function Comments() {
                   minLength={3}
                   maxLength={20}
                   type="text"
-                  className="flex-1 rounded border-2 border-black py-2 pl-3 focus:border-primary focus:outline-none"
+                  className="flex-1 rounded border-2 border-black text-black py-2 pl-3 focus:border-primary focus:outline-none"
                   placeholder="Dein Name"
                 />
                 <button className="rounded bg-primary px-4 py-2 font-bold text-white hover:bg-primary-700">
@@ -171,7 +171,7 @@ function Comments() {
             minLength={1}
             maxLength={200}
             type="text"
-            className="max-w-[calc(100%-5rem)] flex-1 rounded border-2 border-black py-2 pl-3 focus:border-primary focus:outline-none"
+            className="max-w-[calc(100%-5rem)] flex-1 rounded border-2 border-black py-2 pl-3 text-black focus:border-primary focus:outline-none"
             placeholder="Schreibe eine Nachricht..."
           />
           <button

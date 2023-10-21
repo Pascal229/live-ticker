@@ -59,8 +59,17 @@ function getGameInfos(game: Game) {
   };
 }
 
-const getImage = (team: Team, host: { secure: 's' | '', host: string }) =>
-  `http${host.secure}://${host.host}/teams/${team.key}.png`;
+const getImageHost = () => {
+  const host = new URLSearchParams(window.location.search).get("image_host")
+  return {
+    host: host!, secure: host?.includes("localhost") ? '' : 's'
+  }
+}
+
+const getImage = (team: Team): string => {
+  const host = getImageHost();
+  return `http${host.secure}://${host.host}/teams/${team.key}.png`;
+}
 
 const getHost = () => {
   const host = new URLSearchParams(window.location.search).get("host")
@@ -153,15 +162,16 @@ function App() {
 
   return (
     <div
-      className="h-screen w-screen flex flex-col relative p-12"
+      className="h-screen w-screen flex flex-col relative p-8"
       style={{
         backgroundColor: FULLSCREEN_STATES.includes(
           game?.status ?? GameStatus.NOT_STARTED
         )
-          ? "#333333"
+          ? "#0f172a"
           : "#003FFF",
       }}
     >
+
       <div className="flex w-full justify-center">
         <div className="flex flex-col items-center">
           <div className="bg-white flex flex-col items-center rounded-2xl py-2 w-80 text-primary">
@@ -175,7 +185,7 @@ function App() {
             <div className="text-white rounded-b-2xl w-full font-bold text-xl flex justify-between">
               <img
                 className="w-8 h-auto"
-                src={getImage(game.teams[0], host)}
+                src={getImage(game.teams[0])}
                 alt={game.teams[0].name}
               />
               <div className="flex gap-2">
@@ -185,7 +195,7 @@ function App() {
               </div>
               <img
                 className="w-8 h-auto"
-                src={getImage(game.teams[1], host)}
+                src={getImage(game.teams[1])}
                 alt={game.teams[1].name}
               />
             </div>
@@ -194,10 +204,13 @@ function App() {
       </div>
       {FULLSCREEN_STATES.includes(game.status) && (
         <div className="text-primary mt-12 p-16 w-full flex justify-center">
+
           <div className="w-full flex justify-between items-center">
-            <div className="flex flex-col gap-12 w-48 bg-white rounded-3xl h-full p-4 justify-between">
-              <img className="w-48" src={getImage(game.teams[0], host)} alt="" />
-              <p className="text-3xl text-center">{game.teams[0].name}</p>
+            <div className="flex flex-col gap-4">
+              <div className="w-48 bg-white rounded-3xl h-full p-4">
+                <img className="w-48" src={getImage(game.teams[0])} alt="" />
+              </div>
+              <p className="text-3xl text-center text-white">{game.teams[0].name}</p>
             </div>
             <div className="flex items-center gap-2">
               {game.status === GameStatus.NOT_STARTED ? (
@@ -242,13 +255,17 @@ function App() {
                 </div>
               )}
             </div>
-            <div className="flex flex-col gap-12 w-48 bg-white rounded-3xl p-4 justify-between">
-              <img className="w-48" src={getImage(game.teams[1], host)} alt="" />
-              <p className="text-3xl text-center">{game.teams[1].name}</p>
+            <div className="flex flex-col gap-4">
+              <div className="w-48 bg-white rounded-3xl p-4">
+                <img className="w-48" src={getImage(game.teams[1])} alt="" />
+              </div>
+              <p className="text-3xl text-center text-white">{game.teams[1].name}</p>
             </div>
           </div>
         </div>
-      )}
+      )
+      }
+      <img className="w-40 fixed bottom-12 right-12" src="/public/logo-white.svg" alt="Logo" />
     </div>
   );
 }

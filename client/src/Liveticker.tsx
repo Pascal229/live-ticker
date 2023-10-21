@@ -31,7 +31,7 @@ const Liveticker = () => {
   if (!game) return <div>Loading...</div>;
 
   return (
-    <div className="flex justify-center bg-slate-300">
+    <div className="flex justify-center bg-slate-900">
       <div className="flex h-full w-full flex-col lg:h-screen lg:flex-row">
         <div className="flex flex-col flex-1">
           {/* <p>{JSON.stringify(game.data)}</p> */}
