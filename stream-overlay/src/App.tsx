@@ -162,7 +162,9 @@ function App() {
 
   return (
     <div
-      className="h-screen w-screen flex flex-col relative p-8"
+      className={"h-screen w-screen flex flex-col relative p-8 " + FULLSCREEN_STATES.includes(
+        game?.status ?? GameStatus.NOT_STARTED
+      )}
       style={{
         backgroundColor: FULLSCREEN_STATES.includes(
           game?.status ?? GameStatus.NOT_STARTED

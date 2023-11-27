@@ -110,7 +110,7 @@ function Comments() {
   if (!commenterName.data) return <div>Loading...</div>;
 
   return (
-    <div className="flex w-full h-[30rem] flex-col gap-3 p-5 lg:h-screen">
+    <div className="flex w-full h-[30rem] flex-col gap-3 p-5 lg:flex-1 lg:h-[none]">
       <div className="flex h-full flex-1 flex-col rounded-xl bg-slate-800 text-white p-3 text-center font-bold">
         {viewCount + 1} Zuschauer
       </div>
