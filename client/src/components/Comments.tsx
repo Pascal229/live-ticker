@@ -197,8 +197,7 @@ const Comment = (props: { content: string; myself: boolean; name: string }) => {
         }`}
     >
       <div
-        className={`max-w-[60%] rounded  px-2 ${props.myself ? "bg-primary-300" : "bg-gray-300"
-          }`}
+        className={`max-w-[60%] rounded  px-2 text-white bg-slate-700"`}
       >
         <p className="font-bold">{props.name}</p>
         <p className="w-fit max-w-full overflow-hidden">{props.content}</p>

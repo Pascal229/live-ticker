@@ -8,9 +8,9 @@ html,body,#root {
   height: 100%;
 }
 
-@media only screen and (max-width: 900px) {
+@media (max-width: 900px) {
   html,body,#root {
-    height: initial;
+    height: initial !important;
   }
 }
 
