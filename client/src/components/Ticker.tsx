@@ -59,7 +59,7 @@ const TickerHeader = (props: { game: Game }) => {
   return (
     <>
       <div className="flex bg-slate-800 text-white justify-between gap-5 p-5">
-        <div className="flex gap-5 bg-slate-700 rounded-lg w-fit items-center">
+        <div className="flex gap-5 bg-white rounded-lg w-fit items-center">
           <TeamImage teamKey={homeTeam.key} />
         </div>
         <div className="flex justify-center gap-8 flex-1">
@@ -109,7 +109,7 @@ const TickerHeader = (props: { game: Game }) => {
             {guestTeam.name}
           </div>
         </div>
-        <div className="flex justify-end gap-5 bg-slate-700 rounded-lg items-center">
+        <div className="flex justify-end gap-5 bg-white rounded-lg items-center">
           <TeamImage teamKey={guestTeam.key} />
         </div>
       </div>
