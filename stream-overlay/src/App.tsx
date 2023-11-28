@@ -118,9 +118,27 @@ function App() {
 
   const [game, setGame] = useState<Game>();
   const [currentTime, setTime] = useState(new Date().getTime());
+  const [override, setOverride] = useState("");
 
   useEffect(() => {
     let game_id = 0;
+
+
+    const eventSource = new EventSource("http://localhost:8000/connection/uni_sse?" + new URLSearchParams({
+      cf_connect: JSON.stringify({
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJzdHJlYW0tb3ZlcmxheSIsImV4cCI6MTcwMTc4MDA2MiwiaWF0IjoxNzAxMTc1MjYyfQ.yF5GMOX-c4AgXsy6XbeN-wPA_b75pCr7S4nXasmvgNk",
+        name: "overlay",
+        subs: {
+          overrides: { recover: false }
+        }
+      })
+    }).toString());
+
+    eventSource.addEventListener("message", ({ data }) => {
+      const p = JSON.parse(data);
+      if (p.channel === "overrides" && p.pub) setOverride(p.pub.data)
+    })
+
     trpcClient.subscription("tickerEmitter", undefined, {
       onData: (game: Game) => {
         console.log(game.id, game_id);
@@ -160,51 +178,51 @@ function App() {
     GameStatus.FINISHED,
   ];
 
+  const is_fullscreen = override === "fullscreen" || FULLSCREEN_STATES.includes(
+    game?.status ?? GameStatus.NOT_STARTED
+  ) && override !== "video"
+
   return (
     <div
-      className={"h-screen w-screen flex flex-col relative p-8 " + FULLSCREEN_STATES.includes(
-        game?.status ?? GameStatus.NOT_STARTED
-      )}
+      className={"h-screen w-screen flex flex-col relative p-8 " + is_fullscreen}
       style={{
-        backgroundColor: FULLSCREEN_STATES.includes(
-          game?.status ?? GameStatus.NOT_STARTED
-        )
+        backgroundColor: is_fullscreen
           ? "#0f172a"
           : "#003FFF",
       }}
     >
-
-      <div className="flex w-full justify-center">
-        <div className="flex flex-col items-center">
-          <div className="bg-white flex flex-col items-center rounded-2xl py-2 w-80 text-primary">
-            <small className="text-center">{gameInfos.last_status}</small>
-            <p className="text-3xl font-bold w-[100px]">
-              {elapsed_minutes.toString().padStart(2, "0")}:
-              {elapsed_seconds.toString().padStart(2, "0")}
-            </p>
-          </div>
-          <div className="bg-primary w-48 rounded-b-2xl py-2 px-4">
-            <div className="text-white rounded-b-2xl w-full font-bold text-xl flex justify-between">
-              <img
-                className="w-8 h-auto"
-                src={getImage(game.teams[0])}
-                alt={game.teams[0].name}
-              />
-              <div className="flex gap-2">
-                <p>{game.teams[0].score}</p>
-                <p>:</p>
-                <p>{game.teams[1].score}</p>
+      {override !== "hide-nav" &&
+        <div className="flex w-full justify-center">
+          <div className="flex flex-col items-center">
+            <div className="bg-white flex flex-col items-center rounded-2xl py-2 w-80 text-primary">
+              <small className="text-center">{gameInfos.last_status}</small>
+              <p className="text-3xl font-bold w-[100px]">
+                {elapsed_minutes.toString().padStart(2, "0")}:
+                {elapsed_seconds.toString().padStart(2, "0")}
+              </p>
+            </div>
+            <div className="bg-primary w-48 rounded-b-2xl py-2 px-4">
+              <div className="text-white rounded-b-2xl w-full font-bold text-xl flex justify-between">
+                <img
+                  className="w-8 h-auto"
+                  src={getImage(game.teams[0])}
+                  alt={game.teams[0].name}
+                />
+                <div className="flex gap-2">
+                  <p>{game.teams[0].score}</p>
+                  <p>:</p>
+                  <p>{game.teams[1].score}</p>
+                </div>
+                <img
+                  className="w-8 h-auto"
+                  src={getImage(game.teams[1])}
+                  alt={game.teams[1].name}
+                />
               </div>
-              <img
-                className="w-8 h-auto"
-                src={getImage(game.teams[1])}
-                alt={game.teams[1].name}
-              />
             </div>
           </div>
-        </div>
-      </div>
-      {FULLSCREEN_STATES.includes(game.status) && (
+        </div>}
+      {is_fullscreen && (
         <div className="text-primary mt-12 p-16 w-full flex justify-center">
 
           <div className="w-full flex justify-between items-center">

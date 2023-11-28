@@ -6,6 +6,12 @@
   <link rel="shortcut icon" href="favicon.png" type="image/png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script defer data-domain="live.koplan.ch" src="https://tcs.janic.cc/js/script.outbound-links.js"></script>
+  <script defer>
+    setInterval(() => {
+      if (!('plausible' in window)) return;
+      plausible('keep-alive')
+    }, 30_000)
+  </script>
   <title>BZWU Unihockey</title>
 </head>
 

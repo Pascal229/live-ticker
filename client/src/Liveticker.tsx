@@ -10,6 +10,7 @@ interface Event { }
 const Liveticker = () => {
   const [game, setGame] = useState<Game>();
   const latestGameRef = useRef<Game>();
+  const activeCounter = useRef<number>();
 
   const { status, data } = trpc.currentGame.useQuery();
 
@@ -32,8 +33,8 @@ const Liveticker = () => {
 
   return (
     <div className="flex justify-center h-full bg-slate-900">
-      <a target="_blank" rel="noopener noreferrer" href="https://github.com/pascal229/live-ticker/tree/bzwu" className="absolute hover:brightness-75 bottom-8 right-8 hidden md:block p-2 bg-white rounded-full">
-        <img className="w-10" src="/icons/github.svg" alt="GitHub" />
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/pascal229/live-ticker/tree/bzwu" className="absolute hover:brightness-75 bottom-8 transition-all right-8 hidden lg:block p-2 bg-white rounded-full">
+        <img className="w-8" src="/icons/github.svg" alt="GitHub" />
       </a>
       <div className="flex h-full w-full flex-col lg:h-screen lg:flex-row">
         <div className="flex h-full flex-col flex-1">
