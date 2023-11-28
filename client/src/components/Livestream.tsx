@@ -2,7 +2,7 @@ import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import ReactHlsPlayer from "react-hls-player";
 import mutedIcon from "../../public/icons/volume-xmark.svg";
 
-const livestreamHost = "http://localhost:10023/.m3u8"
+const livestreamHost = "https://stream.koplan.ch/.m3u8"
 
 function Livestream() {
   const playerRef =
