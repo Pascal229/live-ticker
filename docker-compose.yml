@@ -20,8 +20,6 @@ services:
       - ELGG_ADMIN=$ELGG_ADMIN
       - DATABASE_URL=postgres://admin:admin@postgres:5432/liveticker
     build: ./
-    ports:
-    - '10022:3000'
     networks:
       - live-ticker
   # nginx:
