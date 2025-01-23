@@ -9,6 +9,8 @@ services:
       POSTGRES_DB: liveticker
     volumes:
       - ./postgres:/var/lib/postgresql/data
+    networks:
+      - live-ticker
   app:
     depends_on:
       - postgres
@@ -20,6 +22,8 @@ services:
     build: ./
     ports:
     - '10022:3000'
+    networks:
+      - live-ticker
   # nginx:
   #   build: ./nginx
   #   depends_on:
@@ -27,3 +31,6 @@ services:
   #   ports:
   #   - '25565:1935'
   #   - '10023:80'
+
+networks:
+  live-ticker:
